@@ -1,5 +1,6 @@
 #include "boid.hpp"
 #include "raymath.h"
+#include <cmath>
 
 Boid::Boid(float x, float y) {
     position = {x, y};
@@ -61,7 +62,18 @@ void Boid::update(const std::vector<Boid>& flock) {
 }
 
 void Boid::draw() {
-    DrawCircleV(position, 10.0f, color);
+    const float side_length = 25.0f;
+
+    // distance from centre to vertex 
+    const float r = side_length / std::sqrt(3.0f);
+
+    float theta = std::atan2f(velocity.y, velocity.x);
+    
+    Vector2 vertex1 = {position.x + r * std::cosf(theta), position.y + r * std::sinf(theta)};
+    Vector2 vertex2 = {position.x + r * std::cosf(theta + 2.0944f), position.y + r * std::sinf(theta + 2.0944f)};
+    Vector2 vertex3 = {position.x + r * std::cosf(theta + 4.1888f), position.y + r * std::sinf(theta + 4.1888f)};
+
+    DrawTriangle(vertex1, vertex3, vertex2, color);
 }
 
 Vector2 Boid::separation(const std::vector<Boid>& flock, float protected_range) {
