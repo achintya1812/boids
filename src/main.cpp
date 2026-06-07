@@ -1,4 +1,5 @@
 #include <raylib.h>
+#include "boid.hpp"
 #include <flock.hpp>
 
 int main() {
@@ -23,7 +24,7 @@ int main() {
         flock.update();
 
         BeginDrawing();
-            ClearBackground(RAYWHITE);
+            ClearBackground(BLACK);
 
             flock.draw();
 

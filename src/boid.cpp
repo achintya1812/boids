@@ -6,6 +6,12 @@ Boid::Boid(float x, float y) {
     
     velocity = { (float)GetRandomValue(-10, 10), (float)GetRandomValue(-10, 10)};
     velocity = Vector2Normalize(velocity);
+
+    unsigned char r = (unsigned char)GetRandomValue(100, 255);
+    unsigned char g = (unsigned char)GetRandomValue(100, 255);
+    unsigned char b = (unsigned char)GetRandomValue(100, 255);
+    
+    color = {r, g, b, 255};
 }
 
 void Boid::update(const std::vector<Boid>& flock) {
@@ -55,8 +61,8 @@ void Boid::update(const std::vector<Boid>& flock) {
 }
 
 void Boid::draw() {
-    DrawCircleV(position, 5.0f, DARKBLUE);
-}   
+    DrawCircleV(position, 10.0f, color);
+}
 
 Vector2 Boid::separation(const std::vector<Boid>& flock, float protected_range) {
     Vector2 c = {0.0f, 0.0f};
