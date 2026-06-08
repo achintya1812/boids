@@ -15,25 +15,30 @@ Boid::Boid(float x, float y) {
     color = {r, g, b, 255};
 }
 
-void Boid::update(const std::vector<Boid>& flock) {
+void Boid::update(const std::vector<Boid>& flock, Vector2 predator_position) {
     float protected_range = 20.0f;
     float visual_range = 80.0f;
+    float predator_range = 120.0f;
 
     float matching_factor = 0.05f;  
     float centering_factor = 0.005f; 
     float avoid_factor = 0.2f;
+    float flee_factor = 1.5f;
 
     Vector2 v1 = separation(flock, protected_range);
     Vector2 v2 = alignment(flock, visual_range);
     Vector2 v3 = cohesion(flock, visual_range);
+    Vector2 v4 = flee(predator_position, predator_range);
 
     v1 = Vector2Scale(v1, avoid_factor);
     v2 = Vector2Scale(v2, matching_factor);
     v3 = Vector2Scale(v3, centering_factor);
+    v4 = Vector2Scale(v4, flee_factor);
 
     velocity = Vector2Add(velocity, v1);
     velocity = Vector2Add(velocity, v2);
     velocity = Vector2Add(velocity, v3);
+    velocity = Vector2Add(velocity, v4);
 
     float margin = 50.0f;
     float turnForce = 1.0f;
@@ -150,4 +155,22 @@ Vector2 Boid::cohesion(const std::vector<Boid>& flock, float visual_range) {
     }
 
     return {0.0f, 0.0f};
+}
+
+Vector2 Boid::flee(const Vector2& predator_position, float predator_range) {
+    float distance = Vector2Distance(position, predator_position);
+
+    if (distance >= predator_range) {
+        return {0.0f, 0.0f};
+    }
+
+    if (distance == 0.0f) {
+        distance = 0.001f;
+    }
+
+    Vector2 away = Vector2Subtract(position, predator_position);
+    away = Vector2Normalize(away);
+
+    float strength = (predator_range - distance) / predator_range;
+    return Vector2Scale(away, strength);
 }

@@ -13,7 +13,7 @@ int main() {
 
     Flock flock;
     Predator predator(screen_width / 2.0f, screen_height / 2.0f);
-    int swarm_size = 500;
+    int swarm_size = 400;
 
     for (int i = 0; i < swarm_size; i++) {
         float initial_x = (float)GetRandomValue(50, screen_width - 50);
@@ -23,8 +23,8 @@ int main() {
     }
 
     while (!WindowShouldClose()) {
-        flock.update();
         predator.update(flock.boids);
+        flock.update(predator.position);
 
         BeginDrawing();
             ClearBackground(BLACK);
