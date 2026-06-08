@@ -27,7 +27,6 @@ void Boid::update(const std::vector<Boid>& flock) {
     Vector2 v2 = alignment(flock, visual_range);
     Vector2 v3 = cohesion(flock, visual_range);
 
-    // CORRECTED SCALING
     v1 = Vector2Scale(v1, avoid_factor);
     v2 = Vector2Scale(v2, matching_factor);
     v3 = Vector2Scale(v3, centering_factor);
@@ -43,7 +42,6 @@ void Boid::update(const std::vector<Boid>& flock) {
     if (position.y < margin) velocity.y += turnForce;
     if (position.y > GetScreenHeight() - margin) velocity.y -= turnForce;
 
-    // ADDED MIN SPEED SO THEY DON'T STALL
     float speed = Vector2Length(velocity);
     float max_speed = 5.0f;
     float min_speed = 2.0f; 

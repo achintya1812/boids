@@ -121,9 +121,11 @@ OBJECTS :=
 GENERATED += $(OBJDIR)/boid.o
 GENERATED += $(OBJDIR)/flock.o
 GENERATED += $(OBJDIR)/main.o
+GENERATED += $(OBJDIR)/predator.o
 OBJECTS += $(OBJDIR)/boid.o
 OBJECTS += $(OBJDIR)/flock.o
 OBJECTS += $(OBJDIR)/main.o
+OBJECTS += $(OBJDIR)/predator.o
 
 # Rules
 # #############################################
@@ -194,6 +196,9 @@ $(OBJDIR)/flock.o: src/flock.cpp
 	@echo "$(notdir $<)"
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/main.o: src/main.cpp
+	@echo "$(notdir $<)"
+	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+$(OBJDIR)/predator.o: src/predator.cpp
 	@echo "$(notdir $<)"
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 
