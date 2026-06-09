@@ -1,5 +1,6 @@
 #pragma once
 #include "raylib.h"
+#include "settings.hpp"
 #include <vector>
 
 class Boid {
@@ -11,7 +12,7 @@ class Boid {
 
         Boid(float x, float y);
 
-        void update(const std::vector<Boid>& flock, Vector2 predator_position);
+        void update(const std::vector<Boid>& flock, Vector2 predator_position, const Settings& settings);
         void draw();
 
     private:

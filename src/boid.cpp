@@ -1,4 +1,6 @@
 #include "boid.hpp"
+#include "settings.hpp"
+
 #include "raymath.h"
 #include <cmath>
 
@@ -15,25 +17,16 @@ Boid::Boid(float x, float y) {
     color = {r, g, b, 255};
 }
 
-void Boid::update(const std::vector<Boid>& flock, Vector2 predator_position) {
-    float protected_range = 20.0f;
-    float visual_range = 80.0f;
-    float predator_range = 120.0f;
+void Boid::update(const std::vector<Boid>& flock, Vector2 predator_position, const Settings& settings) {
+    Vector2 v1 = separation(flock, settings.protected_range);
+    Vector2 v2 = alignment(flock, settings.visual_range);
+    Vector2 v3 = cohesion(flock, settings.visual_range);
+    Vector2 v4 = flee(predator_position, settings.predator_range);
 
-    float matching_factor = 0.05f;  
-    float centering_factor = 0.005f; 
-    float avoid_factor = 0.2f;
-    float flee_factor = 1.5f;
-
-    Vector2 v1 = separation(flock, protected_range);
-    Vector2 v2 = alignment(flock, visual_range);
-    Vector2 v3 = cohesion(flock, visual_range);
-    Vector2 v4 = flee(predator_position, predator_range);
-
-    v1 = Vector2Scale(v1, avoid_factor);
-    v2 = Vector2Scale(v2, matching_factor);
-    v3 = Vector2Scale(v3, centering_factor);
-    v4 = Vector2Scale(v4, flee_factor);
+    v1 = Vector2Scale(v1, settings.avoid_factor);
+    v2 = Vector2Scale(v2, settings.matching_factor);
+    v3 = Vector2Scale(v3, settings.centering_factor);
+    v4 = Vector2Scale(v4, settings.flee_factor);
 
     velocity = Vector2Add(velocity, v1);
     velocity = Vector2Add(velocity, v2);
@@ -41,23 +34,21 @@ void Boid::update(const std::vector<Boid>& flock, Vector2 predator_position) {
     velocity = Vector2Add(velocity, v4);
 
     float margin = 50.0f;
-    float turnForce = 1.0f;
-    if (position.x < margin) velocity.x += turnForce;
-    if (position.x > GetScreenWidth() - margin) velocity.x -= turnForce;
-    if (position.y < margin) velocity.y += turnForce;
-    if (position.y > GetScreenHeight() - margin) velocity.y -= turnForce;
+    float turn_force = 1.0f;
+    if (position.x < margin) velocity.x += turn_force;
+    if (position.x > GetScreenWidth() - margin) velocity.x -= turn_force;
+    if (position.y < margin) velocity.y += turn_force;
+    if (position.y > GetScreenHeight() - margin) velocity.y -= turn_force;
 
     float speed = Vector2Length(velocity);
-    float max_speed = 5.0f;
-    float min_speed = 2.0f; 
     
     if (speed > 0.0f) {
-        if (speed > max_speed) {
-            velocity.x = (velocity.x / speed) * max_speed;
-            velocity.y = (velocity.y / speed) * max_speed;
-        } else if (speed < min_speed) {
-            velocity.x = (velocity.x / speed) * min_speed;
-            velocity.y = (velocity.y / speed) * min_speed;
+        if (speed > settings.prey_max_speed) {
+            velocity.x = (velocity.x / speed) * settings.prey_max_speed;
+            velocity.y = (velocity.y / speed) * settings.prey_max_speed;
+        } else if (speed < settings.prey_min_speed) {
+            velocity.x = (velocity.x / speed) * settings.prey_min_speed;
+            velocity.y = (velocity.y / speed) * settings.prey_min_speed;
         }
     }
     

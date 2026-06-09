@@ -1,5 +1,6 @@
 #include "predator.hpp"
 #include "boid.hpp"
+#include "settings.hpp"
 #include "raymath.h"
 
 Predator::Predator(float x, float y) {
@@ -7,7 +8,7 @@ Predator::Predator(float x, float y) {
     velocity = {0.0f, 0.0f};
 }
 
-void Predator::update(const std::vector<Boid>& flock) {
+void Predator::update(const std::vector<Boid>& flock, const Settings& settings) {
     if (flock.empty()) {
         return;
     }
@@ -29,23 +30,21 @@ void Predator::update(const std::vector<Boid>& flock) {
     velocity = Vector2Add(velocity, desired);
 
     float margin = 50.0f;
-    float turnForce = 1.0f;
-    if (position.x < margin) velocity.x += turnForce;
-    if (position.x > GetScreenWidth() - margin) velocity.x -= turnForce;
-    if (position.y < margin) velocity.y += turnForce;
-    if (position.y > GetScreenHeight() - margin) velocity.y -= turnForce;
+    float turn_force = 1.0f;
+    if (position.x < margin) velocity.x += turn_force;
+    if (position.x > GetScreenWidth() - margin) velocity.x -= turn_force;
+    if (position.y < margin) velocity.y += turn_force;
+    if (position.y > GetScreenHeight() - margin) velocity.y -= turn_force;
 
     float speed = Vector2Length(velocity);
-    float max_speed = 5.0f;
-    float min_speed = 2.0f; 
     
     if (speed > 0.0f) {
-        if (speed > max_speed) {
-            velocity.x = (velocity.x / speed) * max_speed;
-            velocity.y = (velocity.y / speed) * max_speed;
-        } else if (speed < min_speed) {
-            velocity.x = (velocity.x / speed) * min_speed;
-            velocity.y = (velocity.y / speed) * min_speed;
+        if (speed > settings.predator_max_speed) {
+            velocity.x = (velocity.x / speed) * settings.predator_max_speed;
+            velocity.y = (velocity.y / speed) * settings.predator_max_speed;
+        } else if (speed < settings.predator_min_speed) {
+            velocity.x = (velocity.x / speed) * settings.predator_min_speed;
+            velocity.y = (velocity.y / speed) * settings.predator_min_speed;
         }
     }
     
