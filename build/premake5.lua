@@ -118,6 +118,8 @@ end
 -- if you don't want to download raylib, then set this to false, and set the raylib dir to where you want raylib to be pulled from, must be full sources.
 downloadRaylib = true
 raylib_dir = "external/raylib-master"
+rlimgui_dir = "external/rlImGui"
+imgui_dir = "external/imgui"
 
 workspaceName = 'MyGame'
 baseName = path.getbasename(path.getdirectory(os.getcwd()));
@@ -196,7 +198,21 @@ if (downloadRaylib) then
             ["Game Resource Files/*"] = {"../resources/**"},
         }
         
-        files {"../src/**.c", "../src/**.cpp", "../src/**.h", "../src/**.hpp", "../include/**.h", "../include/**.hpp"}
+        files {
+            "../src/**.c",
+            "../src/**.cpp",
+            "../src/**.h",
+            "../src/**.hpp",
+            "../include/**.h",
+            "../include/**.hpp",
+
+            rlimgui_dir .. "/rlImGui.cpp",
+            imgui_dir .. "/imgui.cpp",
+            imgui_dir .. "/imgui_draw.cpp",
+            imgui_dir .. "/imgui_tables.cpp",
+            imgui_dir .. "/imgui_widgets.cpp",
+            imgui_dir .. "/imgui_demo.cpp"
+        }
         
         filter {"system:windows", "action:vs*"}
             files {"../src/*.rc", "../src/*.ico"}
@@ -206,6 +222,13 @@ if (downloadRaylib) then
         
         includedirs { "../src" }
         includedirs { "../include" }
+        includedirs {
+            "../src",
+            "../include",
+            raylib_dir .. "/src",
+            rlimgui_dir,
+            imgui_dir
+        }
 
         links {"raylib"}
 
