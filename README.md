@@ -38,7 +38,7 @@ All tuning is done through the **Simulation Controls** panel:
 - A C++17 compiler (MinGW-w64 / MSVC / GCC / Clang)
 - Git (the project uses submodules)
 
-> raylib is downloaded automatically by premake on first build — you don't need to install it.
+> raylib is downloaded automatically by premake on first build so you don't need to install it.
 
 ### Clone (with submodules)
 ```bash
