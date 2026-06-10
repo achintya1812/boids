@@ -87,9 +87,9 @@ build/
 - [ ] Spatial partitioning (uniform grid) for performance
 
 ## Credits
-- [raylib](https://github.com/raysan5/raylib) — zlib/libpng license
-- [Dear ImGui](https://github.com/ocornut/imgui) — MIT license
-- [rlImGui](https://github.com/raylib-extras/rlImGui) & [raylib-quickstart](https://github.com/raylib-extras/raylib-quickstart) by Jeffery Myers
+- [raylib](https://github.com/raysan5/raylib) 
+- [Dear ImGui](https://github.com/ocornut/imgui) 
+- [rlImGui](https://github.com/raylib-extras/rlImGui) & [raylib-quickstart](https://github.com/raylib-extras/raylib-quickstart) 
 - Boids model by [Craig Reynolds](https://www.red3d.com/cwr/boids/);
   pseudocode reference: [Stanford / Conrad Parker](https://cs.stanford.edu/people/eroberts/courses/soco/projects/2008-09/modeling-natural-systems/boids.html)
 
