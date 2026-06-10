@@ -11,11 +11,11 @@ fleeing behaviour and independent predators that hunt the flock.
 
 ## Features
 
-- **Three core flocking rules** — separation, alignment, and cohesion
-- **Predator–prey dynamics** — prey flee nearby predators; predators chase their nearest prey
-- **Multiple predators** — toggle on/off and adjust the count live
-- **Real-time tuning** — every simulation parameter is adjustable through an ImGui panel
-- **Edge handling** — boids steer back from the screen margins instead of wrapping
+- **Three core flocking rules** - separation, alignment, and cohesion
+- **Predator–prey dynamics** - prey flee nearby predators; predators chase their nearest prey
+- **Multiple predators** - toggle on/off and adjust the count live
+- **Real-time tuning** - every simulation parameter is adjustable through an ImGui panel
+- **Edge handling** - boids steer back from the screen margins instead of wrapping
 
 ## Controls
 
@@ -43,8 +43,6 @@ All tuning is done through the **Simulation Controls** panel:
 ### Clone (with submodules)
 ```bash
 git clone --recursive https://github.com/<you>/boids.git
-# or, if you already cloned without --recursive:
-git submodule update --init --recursive
 ```
 
 ### Windows — MinGW-w64
@@ -56,8 +54,7 @@ bin/Debug/boids.exe
 
 ### Windows — Visual Studio
 ```bash
-build-VisualStudio2022.bat   # or build-VisualStudio2026.bat
-# then open the generated .sln / .slnx and build
+build-VisualStudio2022.bat   # or build-VisualStudio2026.bat then open the generated .sln / .slnx and build
 ```
 
 ### Linux / macOS
