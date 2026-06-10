@@ -4,9 +4,9 @@ void Flock::add(Boid boid) {
     boids.push_back(boid);
 }
 
-void Flock::update(Vector2 predator_position, const Settings& settings) {
+void Flock::update(const std::vector<Predator>& predators, const Settings& settings) {
     for (int i = 0; i < boids.size(); i++) {
-        boids[i].update(boids, predator_position, settings);
+        boids[i].update(boids, predators, settings);
     }
 }
 

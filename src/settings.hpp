@@ -4,6 +4,9 @@ class Settings {
     public:
         int swarm_size = 400;
 
+        bool predators_enabled = true;
+        int predator_count = 1;
+
         float protected_range = 20.0f;
         float visual_range = 80.0f;
         float predator_range = 120.0f;

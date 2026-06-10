@@ -52,5 +52,15 @@ void Predator::update(const std::vector<Boid>& flock, const Settings& settings) 
 }
 
 void Predator::draw() {
-    DrawCircleV(position, 15.0f, RED);
+    const float side_length = 35.0f;
+
+    const float r = side_length / std::sqrt(3.0f);
+
+    float theta = std::atan2f(velocity.y, velocity.x);
+    
+    Vector2 vertex1 = {position.x + r * std::cosf(theta), position.y + r * std::sinf(theta)};
+    Vector2 vertex2 = {position.x + r * std::cosf(theta + 2.0944f), position.y + r * std::sinf(theta + 2.0944f)};
+    Vector2 vertex3 = {position.x + r * std::cosf(theta + 4.1888f), position.y + r * std::sinf(theta + 4.1888f)};
+
+    DrawTriangle(vertex1, vertex3, vertex2, RED);
 }

@@ -19,7 +19,9 @@ int main() {
     Settings settings;
 
     Flock flock;
-    Predator predator(screen_width / 2.0f, screen_height / 2.0f);
+    std::vector<Predator> predators;
+    predators.push_back(Predator(screen_width / 2.0f, screen_height / 2.0f));
+    static const std::vector<Predator> no_predators;   
 
     for (int i = 0; i < settings.swarm_size; i++) {
         float initial_x = (float)GetRandomValue(50, screen_width - 50);
@@ -40,14 +42,39 @@ int main() {
             flock.boids.pop_back();
         }
 
-        predator.update(flock.boids, settings);
-        flock.update(predator.position, settings);
+        while (predators.size() < static_cast<size_t>(settings.predator_count)) {
+            float x = (float)GetRandomValue(50, screen_width - 50);
+            float y = (float)GetRandomValue(50, screen_height - 50);
+
+            predators.push_back(Predator(x, y));
+        }
+
+        while (predators.size() > static_cast<size_t>(settings.predator_count)) {
+            predators.pop_back();
+        }
+
+        if (settings.predators_enabled) {
+            for (int i = 0; i < predators.size(); i++) {
+                predators[i].update(flock.boids, settings);
+            }
+
+            flock.update(predators, settings);
+        }
+
+        else {
+            flock.update(no_predators, settings);
+        }
 
         BeginDrawing();
             ClearBackground(BLACK);
 
             flock.draw();
-            predator.draw();
+            
+            if (settings.predators_enabled) {
+                for (int i = 0; i < predators.size(); i++) {
+                    predators[i].draw();
+                }
+            }
 
             DrawFPS(10, 10);
 
@@ -57,6 +84,9 @@ int main() {
 
             ImGui::SliderInt("Swarm size", &settings.swarm_size, 100, 500);
             ImGui::Text("Active boids: %d", static_cast<int>(flock.boids.size()));
+
+            ImGui::Checkbox("Predators enabled", &settings.predators_enabled);
+            ImGui::SliderInt("Predator count", &settings.predator_count, 1, 10);
 
             ImGui::SliderFloat("Protected range", &settings.protected_range, 5.0f, 50.0f);
             ImGui::SliderFloat("Visual range", &settings.visual_range, 30.0f, 200.0f);

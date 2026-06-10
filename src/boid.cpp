@@ -1,4 +1,5 @@
 #include "boid.hpp"
+#include "predator.hpp"
 #include "settings.hpp"
 
 #include "raymath.h"
@@ -17,11 +18,11 @@ Boid::Boid(float x, float y) {
     color = {r, g, b, 255};
 }
 
-void Boid::update(const std::vector<Boid>& flock, Vector2 predator_position, const Settings& settings) {
+void Boid::update(const std::vector<Boid>& flock, const std::vector<Predator>& predators, const Settings& settings) {
     Vector2 v1 = separation(flock, settings.protected_range);
     Vector2 v2 = alignment(flock, settings.visual_range);
     Vector2 v3 = cohesion(flock, settings.visual_range);
-    Vector2 v4 = flee(predator_position, settings.predator_range);
+    Vector2 v4 = flee(predators, settings.predator_range);
 
     v1 = Vector2Scale(v1, settings.avoid_factor);
     v2 = Vector2Scale(v2, settings.matching_factor);
@@ -147,20 +148,27 @@ Vector2 Boid::cohesion(const std::vector<Boid>& flock, float visual_range) {
     return {0.0f, 0.0f};
 }
 
-Vector2 Boid::flee(const Vector2& predator_position, float predator_range) {
-    float distance = Vector2Distance(position, predator_position);
+Vector2 Boid::flee(const std::vector<Predator>& predators, float predator_range) {
+    Vector2 total = {0.0f, 0.0f};
 
-    if (distance >= predator_range) {
-        return {0.0f, 0.0f};
+    for (int i = 0; i < predators.size(); i++) {
+        float distance = Vector2Distance(position, predators[i].position);
+
+        if (distance >= predator_range) {
+            continue;
+        }
+
+        if (distance == 0.0f) {
+            distance = 0.001f;
+        }
+
+        Vector2 away = Vector2Subtract(position, predators[i].position);
+        away = Vector2Normalize(away);
+
+        float strength = (predator_range - distance) / predator_range;
+        
+        total = Vector2Add(total, Vector2Scale(away, strength));
     }
 
-    if (distance == 0.0f) {
-        distance = 0.001f;
-    }
-
-    Vector2 away = Vector2Subtract(position, predator_position);
-    away = Vector2Normalize(away);
-
-    float strength = (predator_range - distance) / predator_range;
-    return Vector2Scale(away, strength);
+    return total;
 }
