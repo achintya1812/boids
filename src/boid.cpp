@@ -120,7 +120,6 @@ Vector2 Boid::alignment(const std::vector<Boid>& flock, float visual_range) {
     }
 
     return {0.0f, 0.0f};
-
 }
 
 Vector2 Boid::cohesion(const std::vector<Boid>& flock, float visual_range) {

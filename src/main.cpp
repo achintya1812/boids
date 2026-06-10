@@ -60,10 +60,17 @@ int main() {
 
             ImGui::SliderFloat("Protected range", &settings.protected_range, 5.0f, 50.0f);
             ImGui::SliderFloat("Visual range", &settings.visual_range, 30.0f, 200.0f);
+
             if (settings.protected_range > settings.visual_range) {
                 settings.protected_range = settings.visual_range;
             }
             ImGui::SliderFloat("Predator range", &settings.predator_range, 50.0f, 300.0f);
+
+            ImGui::SliderFloat("Prey minimum speed", &settings.prey_min_speed, 0.5f, 5.0f);
+            ImGui::SliderFloat("Prey maximum speed", &settings.prey_max_speed, 2.0f, 10.0f);
+
+            ImGui::SliderFloat("Predator minimum speed", &settings.predator_min_speed, 0.5f, 6.0f);
+            ImGui::SliderFloat("Predator maximum speed", &settings.predator_max_speed, 2.0f, 12.0f);
 
             ImGui::End();
 
