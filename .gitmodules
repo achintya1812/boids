@@ -1,0 +1,6 @@
+[submodule "build/external/imgui"]
+	path = build/external/imgui
+	url = https://github.com/ocornut/imgui.git
+[submodule "build/external/rlImGui"]
+	path = build/external/rlImGui
+	url = https://github.com/raylib-extras/rlImGui.git

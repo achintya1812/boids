@@ -1,161 +1,101 @@
-# Raylib-Quickstart
-A simple cross platform template for setting up a project with the bleeding edge raylib code.
-Works with C or C++.
+# Boids — Flocking Simulation
 
-# Basic Setup
-Download this repository to get started.
+A real-time 2D boids flocking simulation written in C++ with [raylib](https://www.raylib.com/),
+featuring predator–prey dynamics and a live parameter-tuning GUI built with
+[Dear ImGui](https://github.com/ocornut/imgui) via [rlImGui](https://github.com/raylib-extras/rlImGui).
 
-You can download the zip file of the repository from the Green Code button on github. This is the simplest way to get the template to start from.
-Once you have downloaded the template, rename it to your project name.
+Based on Craig Reynolds' classic boids model (separation, alignment, cohesion), extended with
+fleeing behaviour and independent predators that hunt the flock.
 
-or
+![Boids flocking simulation demo](docs/demo.gif)
 
-Clone the repository with git, from the url
-```
-https://github.com/raylib-extras/raylib-quickstart.git
-```
+## Features
 
-If you are using a command line git client you can use the command below to download and rename the template in one step
-```
-git clone https://github.com/raylib-extras/raylib-quickstart.git [name-for-your-project-here]
-```
+- **Three core flocking rules** — separation, alignment, and cohesion
+- **Predator–prey dynamics** — prey flee nearby predators; predators chase their nearest prey
+- **Multiple predators** — toggle on/off and adjust the count live
+- **Real-time tuning** — every simulation parameter is adjustable through an ImGui panel
+- **Edge handling** — boids steer back from the screen margins instead of wrapping
 
-# Naming projects
-* Replace the placeholder with your desired project name when running the git clone command above.
-* __Do not name your game project 'raylib', it will conflict with the raylib library.__
-* If you have used custom game name with __git clone__, there is no need to rename it again.
+## Controls
 
+All tuning is done through the **Simulation Controls** panel:
 
-## Supported Platforms
-Quickstart supports the main 3 desktop platforms:
-* Windows
-* Linux
-* MacOS
+| Parameter              | Description                                       |
+|------------------------|---------------------------------------------------|
+| Swarm size             | Number of prey boids (100–500)                    |
+| Predators enabled      | Toggle predators on/off                           |
+| Predator count         | Number of predators (1–10)                        |
+| Protected range        | Distance at which boids push apart (separation)   |
+| Visual range           | Distance for alignment & cohesion neighbours      |
+| Predator range         | Distance at which prey start fleeing a predator   |
+| Prey min/max speed     | Speed clamp for prey                              |
+| Predator min/max speed | Speed clamp for predators                         |
 
-# VSCode Users (all platforms)
-*Note* You must have a compiler toolchain installed in addition to vscode.
+## Building
 
-1. Download the quickstart
-2. Rename the folder to your game name
-3. Open the folder in VSCode
-4. Run the build task ( CTRL+SHIFT+B or F5 )
-5. You are good to go
+### Prerequisites
+- A C++17 compiler (MinGW-w64 / MSVC / GCC / Clang)
+- Git (the project uses submodules)
 
-# Windows Users
-There are two compiler toolchains available for windows, MinGW-W64 (a free compiler using GCC), and Microsoft Visual Studio
-## Using MinGW-W64
-* Rename the folder to your game name
-* Double click the `build-MinGW-W64.bat` file
-* CD into the folder in your terminal
-  * if you are using the W64devkit and have not added it to your system path environment variable, you must use the W64devkit.exe terminal, not CMD.exe
-  * If you want to use cmd.exe or any other terminal, please make sure that gcc/mingw-W64 is in your path environment variable.
-* run `make`
-* You are good to go
+> raylib is downloaded automatically by premake on first build — you don't need to install it.
 
-### Note on MinGW-64 versions
-Make sure you have a modern version of MinGW-W64 (not mingw).
-The best place to get it is from the W64devkit from
-https://github.com/skeeto/w64devkit/releases
-
-or the version installed with the raylib installer
-
-#### If you have installed raylib from the installer
-Make sure you have added the path
-
-`C:\raylib\w64devkit\bin`
-
-To your path environment variable so that the compiler that came with raylib can be found.
-
-DO NOT INSTALL ANOTHER MinGW-W64 from another source such as msys2, you don't need it.
-
-## Microsoft Visual Studio 2026
-* Rename the folder to your game name
-* Run `build-VisualStudio2026.bat`
-* double click the `.slnx` file that is generated
-* develop your game
-* you are good to go
-
-# Linux Users
-* Rename the folder to your game name
-* CD into the build folder
-* run `./premake5 gmake`
-* CD back to the root
-* run `make`
-* you are good to go
-
-# MacOS Users
-* Rename the folder to your game name
-* CD into the build folder
-* run `./premake5.osx gmake`
-* CD back to the root
-* run `make`
-* you are good to go
-
-# Output files
-The built code will be in the bin dir
-
-# Working directories and the resources folder
-The example uses a utility function from `path_utils.h` that will find the resources dir and set it as the current working directory. This is very useful when starting out. If you wish to manage your own working directory you can simply remove the call to the function and the header.
-
-# Changing to C++
-Simply rename `src/main.c` to `src/main.cpp` and re-run the steps above and do a clean build.
-
-# Using your own code
-Simply remove `src/main.c` and replace it with your code, and re-run the steps above and do a clean build.
-
-# Building for other OpenGL targets
-If you need to build for a different OpenGL version than the default (OpenGL 3.3) you can specify an OpenGL version in your premake command line. Just modify the bat file or add the following to your command line
-
-## For OpenGL 1.1
-`--graphics=opengl11`
-
-## For OpenGL 2.1
-`--graphics=opengl21`
-
-## For OpenGL 4.3
-`--graphics=opengl43`
-
-## For OpenGLES 2.0
-`--graphics=opengles2`
-
-## For OpenGLES 3.0
-`--graphics=opengles3`
-
-## For Software Rendering
-`--graphics=software`
-
-*Note*
-Sofware rendering does not work with glfw, use Win32 or SDL platforms
-`--backend=win32`
-
-# Adding External Libraries 
-
-Quickstart is intentionally minimal — it only includes what is required to compile and run a basic raylib project.  
-If you want to use extra libraries, you can add them to the `build/premake5.lua` file yourself using the links function.
-
-You can find the documentation for the links function here https://premake.github.io/docs/links/
-
-### Example: adding the required libraries for tinyfiledialogs on Windows
-tinyfiledialogs requires extra Windows system libraries.
-The premake file uses filters to define options that are platform specific
-https://premake.github.io/docs/Filters/
-
-Using the windows filter adds these libraries only to the windows build.
-```
-filter "system:windows"
-    links {
-        "Comdlg32",
-        "User32",
-        "Ole32",
-        "Shell32"
-    }
+### Clone (with submodules)
+```bash
+git clone --recursive https://github.com/<you>/boids.git
+# or, if you already cloned without --recursive:
+git submodule update --init --recursive
 ```
 
-### Cross-platform reminder
-If you add a library, make sure to add its required dependencies for all platforms you plan to support (Windows, Linux, MacOS).
-Different libraries will have different dependencies on different platforms.
+### Windows — MinGW-w64
+```bash
+build-MinGW-W64.bat   # runs premake + downloads raylib
+make
+bin/Debug/boids.exe
+```
 
+### Windows — Visual Studio
+```bash
+build-VisualStudio2022.bat   # or build-VisualStudio2026.bat
+# then open the generated .sln / .slnx and build
+```
 
-# License
-Raylib-Quickstart by Jeffery Myers is marked with CC0 1.0. To view a copy of this license, visit https://creativecommons.org/publicdomain/zero/1.0/
+### Linux / macOS
+```bash
+cd build
+./premake5 gmake      # macOS: ./premake5.osx gmake
+cd ..
+make
+./bin/Debug/boids
+```
 
+## Project structure
+```
+src/
+  main.cpp           Entry point, raylib loop, ImGui panel
+  settings.hpp       All tunable simulation parameters
+  boid.hpp/.cpp      Single boid: separation, alignment, cohesion, flee
+  flock.hpp/.cpp     Collection of boids
+  predator.hpp/.cpp  Predator that hunts the nearest prey
+build/
+  premake5.lua       Build configuration
+```
+
+## Roadmap
+- [x] Core flocking (separation / alignment / cohesion)
+- [x] Predator–prey behaviour
+- [x] Multiple predators + ImGui controls
+- [ ] Limited field of view (270°) for predators and prey
+- [ ] Obstacles for boids to steer around
+- [ ] Spatial partitioning (uniform grid) for performance
+
+## Credits
+- [raylib](https://github.com/raysan5/raylib) — zlib/libpng license
+- [Dear ImGui](https://github.com/ocornut/imgui) — MIT license
+- [rlImGui](https://github.com/raylib-extras/rlImGui) & [raylib-quickstart](https://github.com/raylib-extras/raylib-quickstart) by Jeffery Myers
+- Boids model by [Craig Reynolds](https://www.red3d.com/cwr/boids/);
+  pseudocode reference: [Stanford / Conrad Parker](https://cs.stanford.edu/people/eroberts/courses/soco/projects/2008-09/modeling-natural-systems/boids.html)
+
+## License
+Released under the [MIT License](LICENSE). Bundled dependencies retain their own licenses
+(see [Credits](#credits)).

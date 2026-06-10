@@ -408,3 +408,12 @@ Makefile
 /build/compile_commands.json
 
 imgui.ini
+
+# premake-generated makefiles
+*.make
+
+# premake-generated Visual Studio project files
+*.slnx
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
