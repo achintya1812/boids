@@ -42,7 +42,7 @@ All tuning is done through the **Simulation Controls** panel:
 
 ### Clone (with submodules)
 ```bash
-git clone --recursive https://github.com/<you>/boids.git
+git clone --recursive https://github.com/achintya1812/boids.git
 ```
 
 ### Windows — MinGW-w64
