@@ -48,7 +48,7 @@ git clone --recursive https://github.com/achintya1812/boids.git
 ### Build Instructions
 ```bash
 cd build
-./premake5 gmake      # macOS: ./premake5.osx gmake
+./premake5 gmake 
 cd ..
 make
 ./bin/Debug/boids
