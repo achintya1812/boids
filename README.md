@@ -38,26 +38,14 @@ All tuning is done through the **Simulation Controls** panel:
 - A C++17 compiler (MinGW-w64 / MSVC / GCC / Clang)
 - Premake
 
-> raylib is downloaded automatically by premake on first build so you don't need to install it.
+Raylib is downloaded automatically by premake on first build so you don't need to install it.
 
 ### Clone (with submodules)
 ```bash
 git clone --recursive https://github.com/achintya1812/boids.git
 ```
 
-### Windows — MinGW-w64
-```bash
-build-MinGW-W64.bat   # runs premake + downloads raylib
-make
-bin/Debug/boids.exe
-```
-
-### Windows — Visual Studio
-```bash
-build-VisualStudio2022.bat   # or build-VisualStudio2026.bat then open the generated .sln / .slnx and build
-```
-
-### Linux / macOS
+### Build Instructions
 ```bash
 cd build
 ./premake5 gmake      # macOS: ./premake5.osx gmake
@@ -78,7 +66,7 @@ build/
   premake5.lua       Build configuration
 ```
 
-## Roadmap
+## TODO
 - [x] Core flocking (separation / alignment / cohesion)
 - [x] Predator–prey behaviour
 - [x] Multiple predators + ImGui controls
@@ -92,7 +80,3 @@ build/
 - [rlImGui](https://github.com/raylib-extras/rlImGui) & [raylib-quickstart](https://github.com/raylib-extras/raylib-quickstart) 
 - Boids model by [Craig Reynolds](https://www.red3d.com/cwr/boids/);
   pseudocode reference: [Stanford / Conrad Parker](https://cs.stanford.edu/people/eroberts/courses/soco/projects/2008-09/modeling-natural-systems/boids.html)
-
-## License
-Released under the [MIT License](LICENSE). Bundled dependencies retain their own licenses
-(see [Credits](#credits)).
