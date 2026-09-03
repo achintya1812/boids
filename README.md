@@ -1,4 +1,4 @@
-# Boids — Flocking Simulation
+# Boids - Flocking Simulation
 
 A real-time 2D boids flocking simulation written in C++ with [raylib](https://www.raylib.com/),
 featuring predator–prey dynamics and a live parameter-tuning GUI built with
@@ -36,7 +36,7 @@ All tuning is done through the **Simulation Controls** panel:
 
 ### Prerequisites
 - A C++17 compiler (MinGW-w64 / MSVC / GCC / Clang)
-- Git (the project uses submodules)
+- Premake
 
 > raylib is downloaded automatically by premake on first build so you don't need to install it.
 
